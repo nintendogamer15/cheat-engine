@@ -191,7 +191,7 @@ begin
 
 
 
-        url:=getbase+'?cewidth='+inttostr(clientwidth)+'&ceheight='+inttostr(clientheight)+'&fn='+extractfilename(ExtractFileNameWithoutExt(application.ExeName))+'&counter='+inttostr(counter)+getoptionalstring;
+        url:=getbase+'?cewidth='+inttostr(clientwidth)+'&ceheight='+inttostr(clientheight)+'&fn='+extractfilename(ChangeFileExt(application.ExeName, ''))+'&counter='+inttostr(counter)+getoptionalstring;
         browser.Navigate(url);
 
       end;

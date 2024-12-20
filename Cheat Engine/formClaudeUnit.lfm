@@ -1,0 +1,61 @@
+object FormClaude: TFormClaude
+  Left = 192
+  Height = 500
+  Top = 125
+  Width = 700
+  Caption = 'Claude Assistant'
+  ClientHeight = 500
+  ClientWidth = 700
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  Position = poScreenCenter
+  LCLVersion = '2.2.6.0'
+  object pnlTop: TPanel
+    Left = 0
+    Height = 30
+    Top = 0
+    Width = 700
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 30
+    ClientWidth = 700
+    TabOrder = 0
+    object lblStatus: TLabel
+      Left = 8
+      Height = 15
+      Top = 8
+      Width = 32
+      Caption = 'Ready'
+      ParentColor = False
+    end
+  end
+  object memoChat: TMemo
+    Left = 0
+    Height = 370
+    Top = 30
+    Width = 700
+    Align = alClient
+    ReadOnly = True
+    ScrollBars = ssVertical
+    TabOrder = 1
+  end
+  object memoInput: TMemo
+    Left = 0
+    Height = 60
+    Top = 400
+    Width = 620
+    Align = alBottom
+    ScrollBars = ssVertical
+    TabOrder = 2
+  end
+  object btnSend: TButton
+    Left = 620
+    Height = 60
+    Top = 400
+    Width = 80
+    Align = alBottom
+    Caption = 'Send'
+    OnClick = btnSendClick
+    TabOrder = 3
+  end
+end

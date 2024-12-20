@@ -8,6 +8,7 @@ interface
 uses
   {$ifdef darwin}
   LResources, LCLIntf, LCLProc, MacOSAll,MacOSXPosix, LMessages, Classes, Forms, Controls, Messages,
+  formClaudeUnit,
   ComCtrls, stdctrls,sysutils,    graphics,menus, dialogs, extctrls, math, buttons,
   ImgList, ActnList, registry, Clipbrd, NewKernelHandler, Assemblerunit,
   symbolhandler,autoassembler, addresslist, CustomTypeHandler, MemoryRecordUnit,memscan,
@@ -1111,7 +1112,7 @@ implementation
 
 
 uses cefuncproc, MainUnit2, ProcessWindowUnit, MemoryBrowserFormUnit, TypePopup, HotKeys,
-  aboutunit, formhotkeyunit, formDifferentBitSizeUnit,
+  aboutunit, formhotkeyunit, formDifferentBitSizeUnit, formClaudeUnit,
   CommentsUnit, formsettingsunit, formAddressChangeUnit, Changeoffsetunit,
   FoundCodeUnit, AdvancedOptionsUnit, frmProcessWatcherUnit,
   formPointerOrPointeeUnit, OpenSave, formmemoryregionsunit, formProcessInfo,
@@ -5926,7 +5927,9 @@ begin
 end;
 
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TMainForm.FormCreate(Sender: TObject); 
+var
+  miClaude: TMenuItem;
 var
   tokenhandle: thandle;
   {$ifdef windows}
@@ -5953,6 +5956,12 @@ var
   createlog: boolean;
   s: string;
 begin
+  // Create Claude menu item
+  miClaude:=TMenuItem.Create(MainMenu1);
+  miClaude.Caption:='Claude Assistant';
+  miClaude.OnClick:=@miClaudeClick;
+  MainMenu1.Items.Insert(MainMenu1.Items.Count-1, miClaude);
+
   exceptionerrorcs:=TCriticalSection.Create;
   mtid:=MainThreadID;
 
@@ -11222,6 +11231,18 @@ end;
 procedure TMainForm.Type1Click(Sender: TObject);
 begin
   addresslist.doTypeChange;
+end;
+
+procedure TMainForm.miClaudeClick(Sender: TObject);
+begin
+  if FormClaude = nil then
+  begin
+    FormClaude := TFormClaude.Create(Application);
+    FormClaude.AnthropicKey := ''; // User needs to set this in settings
+  end;
+  FormClaude.Show;
+  if FormClaude.WindowState = wsMinimized then
+    FormClaude.WindowState := wsNormal;
 end;
 
 procedure TMainForm.DoGroupconfigButtonClick(sender: tobject);
